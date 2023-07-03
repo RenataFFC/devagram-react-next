@@ -1,0 +1,37 @@
+@mixin buttomPrimary{
+  background-color: $corPrimary;
+  color:$white;
+}
+
+@mixin buttomOutline{
+  background-color: $white;
+  color:$corPrimary;
+  border: 2px solid $corPrimary;
+}
+
+.btn {
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &.primary{
+   @include buttomPrimary;
+
+    &:hover{
+     @include buttomOutline;
+    }
+  }
+
+  &:disabled{
+    opacity: 0.5;
+  }
+
+  &.outline{
+  @include buttomOutline;
+    &:hover{
+      @include buttomPrimary;   
+     }
+  }
+
+}
