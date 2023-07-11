@@ -22,16 +22,16 @@
      @include buttomOutline;
     }
   }
-
-  &:disabled{
-    opacity: 0.5;
-  }
-
+ 
   &.outline{
   @include buttomOutline;
     &:hover{
       @include buttomPrimary;   
      }
   }
+  &:disabled{
+    opacity: 0.5;
+  }
+
 
 }

@@ -1,7 +1,7 @@
 export default function Buttom({
   type ='button',
   text,
-  cor = 'primaria',
+  cor = 'primary',
   desabilitado = false,
   manipularClique
 }){
