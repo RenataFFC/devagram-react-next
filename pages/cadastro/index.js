@@ -4,9 +4,8 @@ import Link from "next/link";
 import Buttom from "../../components/buttom";
 import UploadImagem from "../../components/uploadImagem";
 import InputPublico from "../../components/inputPublico";
-
-
-
+import { validarEmail, validarSenha, validarNome, validarConfirmacaoSenha} from "../../utils/validadores";
+import UsuarioService from "../../services/UsuarioServices";
 
 import imagemLogo from "../../public/imagens/logo.svg";
 import imagemUsuarioAtivo from "../../public/imagens/usuarioAtivo.svg";
@@ -15,7 +14,7 @@ import imagemChave from "../../public/imagens/chave.svg";
 import imagemAvatar from "../../public/imagens/avatar.svg"
 
 
-
+const usuarioService = new UsuarioService();
 
 export default function Cadastro(){
   const [imagem, setImagem] = useState(null)
@@ -23,6 +22,18 @@ export default function Cadastro(){
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmacaoSenha, setConfirmacaoSenha] = useState("");
+
+const  validarFormulario = () =>{
+    return(
+    validarNome(nome)
+    && validarEmail(email)
+    && validarSenha(senha)
+    && validarConfirmacaoSenha(senha,confirmacaoSenha)
+    );
+}
+
+  const aoSubmeter = () 
+
 
   return (
     <section className={`paginaCadastro paginaPublica`}>
@@ -85,7 +96,7 @@ export default function Cadastro(){
                 <Buttom
                     text="Cadastrar"
                     type="submit"
-                    desabilitado={false}
+                    desabilitado={!validarFormulario()}
                 />
             </form>
 
