@@ -22,6 +22,7 @@ export default function Cadastro(){
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmacaoSenha, setConfirmacaoSenha] = useState("");
+  const [estaSubmetendo, setEstaSubmetendo] = useState(false);
 
 const  validarFormulario = () =>{
     return(
@@ -32,8 +33,34 @@ const  validarFormulario = () =>{
     );
 }
 
-  const aoSubmeter = () 
+  const aoSubmeter = (e) => {
+    e.preventDefault();
+    if(!validarFormulario()){
+        return;
+    }
+    setEstaSubmetendo(true);
+  }
 
+  try {
+    const corpoRequisiçãoCadastro = new FormData();
+     corpoRequisiçãoCadastro.append("nome", nome);
+     corpoRequisiçãoCadastro.append("email", email); 
+     corpoRequisiçãoCadastro.append("senha", senha); 
+      if(imagem.arquivo){
+          corpoRequisiçãoCadastro.append("file", imagem.arquivo);
+      }
+
+      await usuarioService.cadastro(corpoRequisiçãoCadastro)
+      alert('sucesso')
+
+
+  } catch (error) {
+
+    alert (
+        "Erro ao cadastrar usuario!" + error?.response?.data?.erro
+    )  
+  };
+ setEstaSubmetendo(false);
 
   return (
     <section className={`paginaCadastro paginaPublica`}>
@@ -47,7 +74,10 @@ const  validarFormulario = () =>{
         </div>
 
         <div className="conteudoPaginaPublica">
-            <form>
+            <form onSubmit={aoSubmeter}>
+
+
+
             <UploadImagem
                         imagemPreviewClassName="avatar avatarPreview"
                         imagemPreview={imagem?.preview || imagemAvatar.src}
@@ -96,7 +126,7 @@ const  validarFormulario = () =>{
                 <Buttom
                     text="Cadastrar"
                     type="submit"
-                    desabilitado={!validarFormulario()}
+                    desabilitado={!validarFormulario() || estaSubmetendo}
                 />
             </form>
 
