@@ -14,9 +14,10 @@ import imagemChave from "../../public/imagens/chave.svg";
 import imagemAvatar from "../../public/imagens/avatar.svg"
 
 
+
 const usuarioService = new UsuarioService();
 
-export default function Cadastro(){
+export default async function Cadastro(){
   const [imagem, setImagem] = useState(null)
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -33,24 +34,24 @@ const  validarFormulario = () =>{
     );
 }
 
-  const aoSubmeter = (e) => {
+  const aoSubmeter = async (e) => {
     e.preventDefault();
     if(!validarFormulario()){
         return;
     }
-    setEstaSubmetendo(true);
+ 
   }
-
+    setEstaSubmetendo(true);
   try {
-    const corpoRequisiçãoCadastro = new FormData();
-     corpoRequisiçãoCadastro.append("nome", nome);
-     corpoRequisiçãoCadastro.append("email", email); 
-     corpoRequisiçãoCadastro.append("senha", senha); 
-      if(imagem.arquivo){
-          corpoRequisiçãoCadastro.append("file", imagem.arquivo);
+    const corpoReqCadastro = new FormData();
+     corpoReqCadastro.append("nome", nome);
+     corpoReqCadastro.append("email", email); 
+     corpoReqCadastro.append("senha", senha); 
+      if(imagem?.arquivo){
+          corpoReqCadastro.append("file", imagem.arquivo);
       }
 
-      await usuarioService.cadastro(corpoRequisiçãoCadastro)
+      await usuarioService.cadastro(corpoReqCadastro);
       alert('sucesso')
 
 
