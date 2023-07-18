@@ -1,18 +1,18 @@
 export default function Buttom({
-  type ='button',
-  text,
+  tipo ='button',
+  texto,
   cor = 'primary',
   desabilitado = false,
   manipularClique
 }){
     return(
      <button 
-        type={type}
+        type={tipo}
         className={`btn ${cor}`}
         disabled={desabilitado}    
         onClick={manipularClique}    
         >
-          {text}
+          {texto}
         </button>
     );
 }

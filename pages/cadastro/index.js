@@ -11,13 +11,11 @@ import imagemLogo from "../../public/imagens/logo.svg";
 import imagemUsuarioAtivo from "../../public/imagens/usuarioAtivo.svg";
 import imagemEnvelope from "../../public/imagens/envelope.svg";
 import imagemChave from "../../public/imagens/chave.svg";
-import imagemAvatar from "../../public/imagens/avatar.svg"
-
-
+import imagemAvatar from "../../public/imagens/avatar.svg";
 
 const usuarioService = new UsuarioService();
 
-export default async function Cadastro(){
+export default function Cadastro(){
 		const [imagem, setImagem] = useState(null);
 		const [nome, setNome] = useState("");
 		const [email, setEmail] = useState("");
@@ -39,6 +37,7 @@ const  validarFormulario = () =>{
 												if(!validarFormulario()){
 																return;
 												} 
+												console.log(validarFormulario())
 												setEstaSubmetendo(true);     
 												try {
 												const corpoReqCadastro = new FormData();
@@ -52,6 +51,7 @@ const  validarFormulario = () =>{
 
 																await usuarioService.cadastro(corpoReqCadastro);
 																alert('sucesso');
+																// TODO: autenticar o usuario diretamente apos o cadastro
 
 								} catch (error) {
 												alert (
@@ -121,8 +121,8 @@ const  validarFormulario = () =>{
 																/>
 
 																<Buttom
-																				text="Cadastrar"
-																				type="submit"
+																				texto="Cadastrar"
+																				tipo="submit"
 																				desabilitado={!validarFormulario() || estaSubmetendo}
 																/>
 												</form>
