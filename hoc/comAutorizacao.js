@@ -1,5 +1,6 @@
 import UsuarioService from "@/services/UsuarioServices"
 import { useRouter } from "next/router";
+import Header from "../components/layout/Header";
 
 const usuarioService = new UsuarioService();
 
@@ -8,15 +9,15 @@ export default function comAutorizacao(Componente){
       const router = useRouter();
 
       if(typeof window !== 'undefined'){
-          if(usuarioService.estaAutenticado()){
-              router.replace('/cadastro');
+          if(!usuarioService.estaAutenticado()){
+              router.replace('/');
               return null;
             }
-          return (
-            
-            
+          return (                       
             <>
-            <Componente{...props}/></>
+            <Header/>
+            <Componente{...props}/>;
+            </>
           );
       }
       return null;
