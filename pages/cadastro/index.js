@@ -6,6 +6,7 @@ import UploadImagem from "../../components/uploadImagem";
 import InputPublico from "../../components/inputPublico";
 import { validarEmail, validarSenha, validarNome, validarConfirmacaoSenha} from "../../utils/validadores";
 import UsuarioService from "../../services/UsuarioServices";
+import { useRouter } from "next/router";
 
 import imagemLogo from "../../public/imagens/logo.svg";
 import imagemUsuarioAtivo from "../../public/imagens/usuarioAtivo.svg";
@@ -22,6 +23,7 @@ export default function Cadastro(){
 		const [senha, setSenha] = useState("");
 		const [confirmacaoSenha, setConfirmacaoSenha] = useState("");
 		const [estaSubmetendo, setEstaSubmetendo] = useState(false);
+		const router = useRouter();
 
 const  validarFormulario = () =>{
 				return(
@@ -50,8 +52,12 @@ const  validarFormulario = () =>{
 																}
 
 																await usuarioService.cadastro(corpoReqCadastro);
-																alert('sucesso');
+																await usuarioService.login({
+																	login: email,
+																	senha
+																});
 																// TODO: autenticar o usuario diretamente apos o cadastro
+																router.push('/');
 
 								} catch (error) {
 												alert (

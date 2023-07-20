@@ -39,14 +39,15 @@ export default function Login({ aposAutenticacao }) {
                 login: email,
                 senha
             });
-
-            //TODO:redirecionar o usuario para a Home 
+              //TODO:redirecionar o usuario para a Home 
+            if(aposAutenticacao){
+                aposAutenticacao();
+            }          
             
         } catch (error) {
             alert(
                 "Erro ao realizar o login." + error?.response?.data?.erro
-            );
-            
+            );            
         }
 
         setEstaSubmetendo(false);
