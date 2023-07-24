@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import logoHorizontalImg from '../../public/imagens/logoHorizontal.svg';
-import imagemLupa from '../../public/imagens/lupa.svg'
+import imagemLupa from '../../public/imagens/lupa.svg';
+import Navegacao from '../layout/Navegacao';
 
 
 export default function Header(){
@@ -23,9 +24,16 @@ export default function Header(){
 					 alt='Icone Lupa'
 					 layout='fill'
 					/>
-
 				  </div>
+					 <input
+					    type='text'
+							placeholder='Pesquisar'
+							value={''}
+							onChange={() => console.log('Pesquisando')}
+					 
+					 />
 			  </div>
+				 <Navegacao className='desktop'/>
 
 			</div>
 		</header>
