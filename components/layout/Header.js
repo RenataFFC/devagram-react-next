@@ -4,11 +4,14 @@ import imagemLupa from '../../public/imagens/lupa.svg';
 import Navegacao from '../layout/Navegacao';
 import ResultadoPesquisa from './ResultadoPesquisa';
 import { useState } from 'react';
+import UsuarioService from '@/services/UsuarioServices';
+
+const usuarioService = new UsuarioService();
 
 
 export default function Header(){
 	const [resultadoPesquisa, setResultadoPesquisa] = useState([]);
-  const [termoPesquisado, setTermoPesquisado] = useState([]);
+  const [termoPesquisado, setTermoPesquisado] = useState('');
 	const aoPesquisar = (e) => {		
 		setTermoPesquisado(e.target.value);
 		setResultadoPesquisa([]);

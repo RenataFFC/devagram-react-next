@@ -24,4 +24,6 @@ export default class UsuarioService extends HttpService {
   estaAutenticado(){
     return localStorage.getItem('token') !== null;
   }
+
+  //criando um método para pesquisar
 }
