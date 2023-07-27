@@ -17,13 +17,17 @@ export default class UsuarioService extends HttpService {
       localStorage.setItem("avatar", usuario.data.avatar);
     }
   }
-
+  //criando um método cadastro
   async cadastro(dados) {
     return this.post("/cadastro", dados);
   }
   estaAutenticado(){
     return localStorage.getItem('token') !== null;
   }
-
   //criando um método para pesquisar
+  async pesquisar(termoPesquisado) {
+    return this.get('/pesquisa?filter='+ termoPesquisado);
+  }
+ 
+
 }
