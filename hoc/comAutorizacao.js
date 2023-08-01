@@ -7,7 +7,7 @@ import Footer from "../components/layout/Footer";
 const usuarioService = new UsuarioService();
 
 export default function comAutorizacao(Componente){
-    return(props) => {
+    return (props) => {
       const router = useRouter();
 
       if(typeof window !== 'undefined'){

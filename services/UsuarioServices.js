@@ -15,6 +15,7 @@ export default class UsuarioService extends HttpService {
 
     if (usuario.data.avatar) {
       localStorage.setItem("avatar", usuario.data.avatar);
+      
     }
   }
   //criando um método cadastro
@@ -25,8 +26,8 @@ export default class UsuarioService extends HttpService {
     return localStorage.getItem('token') !== null;
   }
   //criando um método para pesquisar
-  async pesquisar(termoPesquisado) {
-    return this.get('/pesquisa?filter='+ termoPesquisado);
+  async pesquisar(termoDaPesquisa) {
+    return this.get('/pesquisa?filter='+ termoDaPesquisa);
   }
  
 

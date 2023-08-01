@@ -1,6 +1,6 @@
 import Avatar from '../avatar';
 
-export default function ResultadoPesquisa({nome, avatar,email, onClick,id}) {
+export default function ResultadoPesquisa({ nome,  email, avatar,  onClick, id}) {
    return(
     <div className="resultadoPesquisa" onClick={() => onClick(id)}>
          <Avatar src={avatar}/>
@@ -10,6 +10,6 @@ export default function ResultadoPesquisa({nome, avatar,email, onClick,id}) {
           </div>
     </div>
      
-   )
+   );
   
  }

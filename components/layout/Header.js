@@ -4,80 +4,58 @@ import imagemLupa from '../../public/imagens/lupa.svg';
 import Navegacao from '../layout/Navegacao';
 import ResultadoPesquisa from './ResultadoPesquisa';
 import { useState } from 'react';
-import UsuarioService from '@/services/UsuarioServices';
+import UsuarioService from '../../services/UsuarioServices';
 
 const usuarioService = new UsuarioService();
-
 
 export default function Header(){
 	const [resultadoPesquisa, setResultadoPesquisa] = useState([]);
   const [termoPesquisado, setTermoPesquisado] = useState('');
+
 	const aoPesquisar = async (e) => {		
 		setTermoPesquisado(e.target.value);
 		setResultadoPesquisa([]);
-		if(termoPesquisado.length < 3){
+
+		if(e.target.value.length < 3){
 			return;
- }
- try {
-	const {data} = await usuarioService.pesquisar(termoPesquisado);
-	console.log(data)
- } catch (error) {
-	 alert('Erro ao pesquisar usuario' + error?.response?.data?.erro);
- } 
-
- setResultadoPesquisa([
-	{
-	avatar: '',
-	nome:'Johny',
-	email:'johny@johny.com',
-	_id:'12345'
-},
-{
-	avatar: '',
-	nome:'renata',
-	email:'renatactba@renatactba.com',
-	_id:'12345'
-},
-{
-	avatar: '',
-	nome:'Joao',
-	email:'joao@hotmail.com',
-	_id:'12345'
-}
-]);
-	}
-
-   
+    }
+				try {
+					const { data } = await usuarioService.pesquisar(termoPesquisado);
+					setResultadoPesquisa(data);
+				} catch (error){
+					alert('Erro ao pesquisar usuario' + error?.response?.data?.erro);
+				}  
+				}   
 
 	const aoClicarResultadoPesquisa = (id) => {
-		 console.log('aoClicarResultadoPesquisa', {id})
+		 console.log('aoClicarResultadoPesquisa', {id});
 	}
    return (
-
 		<header className='headerPrincipal'>
-			<div className="conteudoHeaderPrincipal">
-			
-           <div className="logoHeaderPrincipal">  
-				<Image
-				 src={logoHorizontalImg}
-				 alt='logo devagram'
-				 layout='fill' //permite redimensionar a imagem  baseado na div pai dela.
-				/>
-			  </div>
-			  <div className="barraPesquisa">
-				  <div className='containerImagemLupa'>
+			<div className="conteudoHeaderPrincipal">			
+          <div className="logoHeaderPrincipal">  
 					<Image
-					 src={imagemLupa}
-					 alt='Icone Lupa'
-					 layout='fill'
-					/>
+						src={logoHorizontalImg}
+						alt='logo devagram'
+						layout='fill' //permite redimensionar a imagem  baseado na div pai dela.
+						/>
+			     </div>
+
+			  <div className="barraPesquisa">
+						<div className='containerImagemLupa'>
+						<Image
+						src={imagemLupa}
+						alt='Icone Lupa'
+						layout='fill'
+						/>					
 				  </div>
-					 <input
+
+					  <input
 					    type='text'
 							placeholder='Pesquisar'
 							value={termoPesquisado}
 							onChange={aoPesquisar}					 
-					 />
+					   />
 			  </div>
 				 <Navegacao className='desktop'/>
 			</div>
