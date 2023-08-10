@@ -5,12 +5,14 @@ import Navegacao from '../layout/Navegacao';
 import ResultadoPesquisa from './ResultadoPesquisa';
 import { useState } from 'react';
 import UsuarioService from '../../services/UsuarioServices';
+import { useRouter } from 'next/router';
 
 const usuarioService = new UsuarioService();
 
 export default function Header(){
 	const [resultadoPesquisa, setResultadoPesquisa] = useState([]);
   const [termoPesquisado, setTermoPesquisado] = useState('');
+	const router = useRouter();
 
 	const aoPesquisar = async (e) => {		
 		setTermoPesquisado(e.target.value);
@@ -28,7 +30,9 @@ export default function Header(){
 				}   
 
 	const aoClicarResultadoPesquisa = (id) => {
-		 console.log('aoClicarResultadoPesquisa', {id});
+		setResultadoPesquisa([]);
+		setTermoPesquisado('');
+		 router.push(`/perfil/${id}`);
 	}
    return (
 		<header className='headerPrincipal'>
