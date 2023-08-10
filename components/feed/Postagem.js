@@ -28,7 +28,7 @@ export default function Postagem({
         </div>
 
        <div className="footerDaPostagem">
-            <div className="acoesfooterDaPostagem">
+            <div className="acoesDaPostagem">
                 <Image 
                 src={imgCurtir}
                 alt="icone curtir"
@@ -36,6 +36,7 @@ export default function Postagem({
                 height={20}
                 onClick={() => console.log('curtir')}
                 />  
+
                 <Image 
                 src={imgComentarioCinza}
                 alt="icone comentar"
@@ -43,24 +44,26 @@ export default function Postagem({
                 height={20}
                 onClick={() => console.log('comentar')}
                 />  
+
                 <span className="quantidadeCurtidas">
-                  Curtida por <strong>32 pessoas</strong>
+                   Curtida por <strong> 32 pessoas </strong>
                 </span>
             </div>
-            <div className="descricaoDaPostagem">
-               <strong className="nomeUsuario">{usuario.nome}</strong>
-            <p className="descricao">{descricao}</p>
-            </div>
-           </div>
 
-           <div className="comentariosDaPublicacao">
-            {comentarios.map( (comentario,i) => (
-              <div className="comentario" key={i}>
-                <strong className="nomeUsuario">{comentario.nome}</strong>
-                <p className="descricao">{comentario.mensagem}</p>
-                 </div>              
-            ))}
-           </div>
+            <div className="descricaoDaPostagem">
+                <strong className="nomeUsuario">{usuario.nome} </strong>
+                <p className="descricao">{descricao}</p>
+            </div>          
+
+            <div className="comentariosDaPublicacao">
+              {comentarios.map( (comentario,i) => (
+                <div className="comentario" key={i}>
+                  <strong className="nomeUsuario">{comentario.nome}</strong>
+                  <p className="descricao">{comentario.mensagem}</p>
+                </div>              
+              ))}
+            </div>         
     </div>
-  )
-}
+    </div>
+    );}
+    
