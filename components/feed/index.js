@@ -7,12 +7,12 @@ const feedService = new FeedService();
 export default function Feed({usuarioLogado}){
    const[listaDePostagens, setListaDePostagens] = useState([]);
 
-   useEffect(async() =>  {
-    const {data} = await feedService.carregarPostagens();
-    setListaDePostagens([]);
-   
-    const postagensFormatadas = data.map((postagem) => (
-      { 
+   useEffect (() => {
+    async function  dadosPostagens() {
+      setListaDePostagens([]);
+      const { data } = await feedService.carregarPostagens();    
+        if(data.length > 0 ){
+        const postagensFormatadas = data.map((postagem) =>({ 
         id: postagem._id,
         usuario:{
            id: postagem.userId,
@@ -25,24 +25,29 @@ export default function Feed({usuarioLogado}){
          comentarios: postagem.comentarios.map(c => ({
          nome: c.nome,
          mensagem: c.comentario
-         })) 
-        }
-    ));
-
-    setListaDePostagens(postagensFormatadas);
-
-   
-   },[usuarioLogado]);
-   
-   return(
-    <div className="feedContainer largura30pctDesktop">
-      {listaDePostagens.map(dadosPostagem =>(
-         <Postagem 
-           Key={dadosPostagem.id}
-           {...dadosPostagem}
-           usuarioLogado={usuarioLogado}
-          />
-      ))}  
-    </div>   
-   )
+         }))
+   })); 
+   setListaDePostagens(postagensFormatadas);
+  }      
+  
+  dadosPostagens();
 }
+},[usuarioLogado]);
+      
+
+
+   
+      return(
+        <div className="feedContainer largura30pctDesktop">
+          {listaDePostagens.map(dadosPostagem =>(
+            <Postagem 
+              Key={dadosPostagem.id}
+              {...dadosPostagem}
+              usuarioLogado={usuarioLogado}
+              />
+            ))
+          }  
+        </div>   
+      )
+ }
+   
