@@ -1,55 +1,37 @@
 import { useEffect, useState } from "react";
 import Postagem from '../feed/Postagem';
+import FeedService from '../../services/FeedService';
+
+const feedService = new FeedService();
 
 export default function Feed({usuarioLogado}){
    const[listaDePostagens, setListaDePostagens] = useState([]);
 
-   useEffect(() => {
-    console.log('carregar o feed');
-    setListaDePostagens([
-      {
-        id: '1',
+   useEffect(async() =>  {
+    const {data} = await feedService.carregarPostagens();
+    setListaDePostagens([]);
+   
+    const postagensFormatadas = data.map((postagem) => (
+      { 
+        id: postagem._id,
         usuario:{
-            id:'1',
-            nome:'Renata',
-            avatar:null
+           id: postagem.userId,
+           nome:postagem.usuario.nome,
+           avatar:postagem.usuario.avatar 
         },
-        fotoDoPost:'https://img.elo7.com.br/product/zoom/338BB23/painel-de-festa-paisagem-natureza-3x2-festa-infantil.jpg',
-        descricao:'Donate: If you use this site regularly and would like to help keep the site on the Internet, please consider donating a small sum to help pay',
-        curtidas:[],
-        comentarios:[
-            {
-              nome:'Fulano',
-              mensagem:'Muito Legal'
-            }
-        ]
-      },  
-      {
-        id: '2',
-        usuario:{
-            id:'2',
-            nome:'johny',
-            avatar:null
-        },
-        fotoDoPost:'https://blog.emania.com.br/wp-content/uploads/2015/10/fotos-de-natureza.jpg',
-        descricao:'he standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32',
-        curtidas:[],
-        comentarios:[
-            {
-              nome:'Joao',
-              mensagem:'Muito Legal'
-            },
-            {
-              nome:'Renata',
-              mensagem:'Show'
-            },
-            {
-              nome:'Joohny',
-              mensagem:'Legal'
-            },
-        ]
-      },        
-    ])      
+         fotoDoPost: postagem.foto,
+         descricao: postagem.descricao,
+         curtidas: postagem.likes,
+         comentarios: postagem.comentarios.map(c => ({
+         nome: c.nome,
+         mensagem: c.comentario
+         })) 
+        }
+    ));
+
+    setListaDePostagens(postagensFormatadas);
+
+   
    },[usuarioLogado]);
    
    return(

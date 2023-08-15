@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Login from '../components/login';
-import UsuarioService from '@/services/UsuarioServices';
+import UsuarioService from "../services/UsuarioServices";
 import Home from '../components/home';
 
 const usuarioService = new UsuarioService()

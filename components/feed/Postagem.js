@@ -2,16 +2,16 @@ import Link from "next/link";
 import Image from "next/image";
 import Avatar from "../avatar";
 import { useState } from "react";
-import {FazerComentario} from '../../components/feed/FazerComentario';
-
 
 import imgCurtir from "../../public/imagens/curtir.svg";
 import imgCurtido from "../../public/imagens/curtido.svg";
 import imgComentarioAtivo from "../../public/imagens/comentarioAtivo.svg";
 import imgComentarioCinza from "../../public/imagens/comentarioCinza.svg";
+import {FazerComentario} from '../../components/feed/FazerComentario';
 
 
-const tamanhoLimiteDescricao = 93;
+const tamanhoLimiteDescricao = 90;
+
 export default function Postagem({
     usuario,
     fotoDoPost,
@@ -21,9 +21,7 @@ export default function Postagem({
 }){
 
   const [deveExibirSecaoParaComentar, setDeveExibirSecaoParaComentar] = useState(false)
-  const [tamanhoAtualDaDescricao, setTamanhoAtualDaDescricao] = useState(
-     tamanhoLimiteDescricao
-  );
+  const [tamanhoAtualDaDescricao, setTamanhoAtualDaDescricao] = useState(tamanhoLimiteDescricao);
 
   const exibirDescricaoCompleta = () => {
       setTamanhoAtualDaDescricao(Number.MAX_SAFE_INTEGER);
@@ -35,13 +33,11 @@ export default function Postagem({
 
   const obterDescricao = () => {
     let mensagem = descricao.substring(0 , tamanhoAtualDaDescricao);
-    if(descricaoMaiorQueLimite){
+    if(descricaoMaiorQueLimite()){
        mensagem += '...';
     }
     return mensagem
-    }
-
-  
+    }  
 
   return(
     <div className="postagem">
@@ -49,7 +45,7 @@ export default function Postagem({
             <section className="headerPostagem">
               <Avatar src={usuario.avatar}/>
               <strong>{usuario.nome}</strong>
-              </section>           
+            </section>           
         </Link>    
 
         <div className="fotoDaPostagem">
@@ -94,7 +90,7 @@ export default function Postagem({
             </div>          
 
             <div className="comentariosDaPublicacao">
-              {comentarios.map( (comentario,i) => (
+              {comentarios.map((comentario,i) => (
                 <div className="comentario" key={i}>
                   <strong className="nomeUsuario">{comentario.nome}</strong>
                   <p className="descricao">{comentario.mensagem}</p>
@@ -102,9 +98,10 @@ export default function Postagem({
               ))}
            </div>             
         </div>
-    {deveExibirSecaoParaComentar &&
-        <FazerComentario usuarioLogado={usuarioLogado}/>
-    }    
+        
+        {deveExibirSecaoParaComentar &&
+            <FazerComentario usuarioLogado={usuarioLogado}/>
+        }    
     </div>
     );
   }
