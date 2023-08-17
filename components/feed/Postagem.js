@@ -4,7 +4,7 @@ import Avatar from "../avatar";
 import { useState } from "react";
 
 import imgCurtir from "../../public/imagens/curtir.svg";
-import imgCurtido from "../../public/imagens/curtido.svg";
+//import imgCurtido from "../../public/imagens/curtido.svg";
 import imgComentarioAtivo from "../../public/imagens/comentarioAtivo.svg";
 import imgComentarioCinza from "../../public/imagens/comentarioCinza.svg";
 import {FazerComentario} from '../../components/feed/FazerComentario';
@@ -39,6 +39,20 @@ export default function Postagem({
     return mensagem
     }  
 
+    // o icone do comentario ficara lilás ao ser clicado
+    const obterImagemComentario = () =>{
+    return deveExibirSecaoParaComentar 
+    ?imgComentarioAtivo 
+    :imgComentarioCinza;
+    }
+    
+    //Fazer a chamada para a API
+
+    const comentar = async (comentario) => {
+       console.log('fazer comentario');
+       return true;
+    }
+
   return(
     <div className="postagem">
         <Link href={`/perfil/${usuario.id}`}>
@@ -63,7 +77,7 @@ export default function Postagem({
                 />  
 
                 <Image 
-                src={imgComentarioCinza}
+                src={obterImagemComentario()}
                 alt="icone comentar"
                 width={20}
                 height={20}
@@ -100,7 +114,7 @@ export default function Postagem({
         </div>
         
         {deveExibirSecaoParaComentar &&
-            <FazerComentario usuarioLogado={usuarioLogado}/>
+            <FazerComentario comentar={comentar} usuarioLogado={usuarioLogado}/>
         }    
     </div>
     );

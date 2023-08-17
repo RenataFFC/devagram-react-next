@@ -10,9 +10,8 @@ export default function Feed({usuarioLogado}){
    useEffect (() => {
     async function  dadosPostagens() {
             setListaDePostagens([]);
-            const { data } = await feedService.carregarPostagens();    
-               
-                    const postagensFormatadas = data.map((postagem) =>({ 
+            const { data } = await feedService.carregarPostagens();   
+                  const postagensFormatadas = data.map((postagem) =>({ 
                     id: postagem._id,
                     usuario:{
                       id: postagem.userId,
@@ -29,8 +28,8 @@ export default function Feed({usuarioLogado}){
               })); 
               setListaDePostagens(postagensFormatadas);
               console.log(postagensFormatadas);
-            
-  }       
+             
+  }        
   dadosPostagens();
 },[]);
 
