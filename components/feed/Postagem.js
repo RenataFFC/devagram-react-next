@@ -24,6 +24,7 @@ export default function Postagem({
     usuarioLogado,
     curtidas
 }){
+  const [curtidasPostagem, setCurtidasPostagem] = useState(curtidas);
   const [comentariosPostagem,setComentariosPostagem] = useState(comentarios);
   const [deveExibirSecaoParaComentar, setDeveExibirSecaoParaComentar] = useState(false)
   const [tamanhoAtualDaDescricao, setTamanhoAtualDaDescricao] = useState(tamanhoLimiteDescricao);
@@ -51,13 +52,7 @@ export default function Postagem({
     : imgComentarioCinza;
     }
 
-    const alterarCurtidas = () =>{
-      try {
-        
-      } catch (e) {
-        
-      }
-    }
+ 
     
     //Lógica para a chamada da API
     // try catch para avaliar se terá um comportamento inexperado da aplicação
@@ -77,15 +72,42 @@ export default function Postagem({
              nome: usuarioLogado.nome,
              mensagem: comentario
           }
-         ])    
-         return true;      
+         ]);              
       } catch (e) {
-        alert('Erro ao fazer comentario' + (e?.response?.data?.erro ||'')) // Exibi o erro da API caso tenha alguma mensagem de erro customizado ou devolva uma string vazia
-        return false
-      }
+        alert('Erro ao fazer comentario' + (e?.response?.data?.erro ||'')); // Exibi o erro da API caso tenha alguma mensagem de erro customizado ou devolva uma string vazia
+      } 
+    }
 
+    const usuarioLogadoCurtiuPostagem = () => {
+       return curtidasPostagem.includes(usuarioLogado.id);
+    }
+       
+    const alterarCurtida = async () => {
+       try {
+           await feedService.alterarCurtida(id);9
+           const estaCurtido = curtidasPostagem.includes(usuarioLogado.id);
+           if(usuarioLogadoCurtiuPostagem()){
+            //Se o usuario logado curtiu a postagem tiro o usuario da lista de curtidas
+             setCurtidasPostagem(
+               curtidasPostagem.filter(idUsuarioQueCurtiu => idUsuarioQueCurtiu !== usuarioLogado.id)  //filter - filtrar somente os subitems da lista que combinam com o filtro
+             )}
+             else{
+              //adiciona o usuario logado na lista de curtidas
+               setCurtidasPostagem([
+                  ...curtidasPostagem,
+                  usuarioLogado.id
+               ]);
+             }           
+            //includes() determina se um array/objeto contém um determinado elemento ou não, retornando true ou false
+       } catch (e) {
+        alert('Erro ao alterar a curtida' + (e?.response?.data?.erro ||''))
+       }
+    }
 
-       return Promise.resolve(true);
+    const obterImagemCurtida = () =>{
+          return usuarioLogadoCurtiuPostagem()
+          ?imgCurtido
+          :imgCurtir;
     }
 
   return(
@@ -104,11 +126,11 @@ export default function Postagem({
        <div className="footerDaPostagem">
             <div className="acoesDaPostagem">
                 <Image 
-                src={imgCurtir}
+                src={obterImagemCurtida()}
                 alt="icone curtir"
                 width={20}
                 height={20}
-                onClick={alterarCurtidas}
+                onClick={alterarCurtida}
                 />  
 
                 <Image 
@@ -120,7 +142,7 @@ export default function Postagem({
                 />  
 
                 <span className="quantidadeCurtidas">
-                   Curtida por <strong> {curtidas.length} pessoas </strong>
+                   Curtida por <strong> {curtidasPostagem.length} pessoas </strong>
                 </span>
             </div>
 
