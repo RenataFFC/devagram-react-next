@@ -9,7 +9,7 @@ export function FazerComentario({usuarioLogado , comentar}){
     //Controla qtde de linhas no comentario
     //trim() - metodo que tira todos os espaços que tem em uma string
     const aoDigitarComentario = (e) => {
-      const valorInput = e.target.value.trim();
+      const valorInput = e.target.value;
         setComentario(valorInput);
         setLinhas(valorInput.length > 0 ? 2 : 1 );
    }
@@ -17,22 +17,18 @@ export function FazerComentario({usuarioLogado , comentar}){
    //metodo que captura o evento do input ao ser digitado.
     const aoPressionarQualquerTecla = (e) => {
 
-      if(<e className="Key"></e> === 'Enter'){
-         manipularComentario();
+      if( e.key === 'Enter'){
+         fazerComentario();
       }    
    }
    // Caso o usuario de o enter estando o input vazio, ele sai
-   const manipularComentario = async () =>{
+   const fazerComentario = () =>{
        if(comentario.trim().length === 0 || !comentar){
           return;
        }
 
-   const sucessoAoComentar = await comentar(comentario);
-   console.log('teste')
-      if(sucessoAoComentar){
-         setComentario('');
-         setLinhas(1);
-      }
+   comentar(comentario);
+ 
    }
 
   
@@ -45,11 +41,13 @@ export function FazerComentario({usuarioLogado , comentar}){
                rows={linhas} 
                onChange={aoDigitarComentario}
                onKeyDown={aoPressionarQualquerTecla}
+               value={comentario}
                placeholder="Adicione um comentario...">
             </textarea>
             <button 
                type="button" 
-               className="btnPublicacao desktop">
+               className="btnPublicacao desktop"
+               onClick={fazerComentario}>
                Publicar        
             </button>
      </div>

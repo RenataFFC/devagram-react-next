@@ -8,9 +8,9 @@ export default function Feed({usuarioLogado}){
    const[listaDePostagens, setListaDePostagens] = useState([]);
 
    useEffect (() => {
-    async function  dadosPostagens() {
+    async function  fetchPostagens() {
             setListaDePostagens([]);
-            const { data } = await feedService.carregarPostagens();   
+            const {data} = await feedService.carregarPostagens();   
                   const postagensFormatadas = data.map((postagem) =>({ 
                     id: postagem._id,
                     usuario:{
@@ -30,14 +30,14 @@ export default function Feed({usuarioLogado}){
               console.log(postagensFormatadas);
              
   }        
-  dadosPostagens();
+  fetchPostagens();
 },[]);
 
       return(
         <div className="feedContainer largura30pctDesktop">
           {listaDePostagens.map(dadosPostagem =>(
             <Postagem 
-              Key={dadosPostagem.id}
+              key={dadosPostagem.id}
               {...dadosPostagem}
               usuarioLogado={usuarioLogado}
               />

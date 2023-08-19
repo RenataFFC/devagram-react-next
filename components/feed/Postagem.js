@@ -3,23 +3,28 @@ import Image from "next/image";
 import Avatar from "../avatar";
 import { useState } from "react";
 
+
 import imgCurtir from "../../public/imagens/curtir.svg";
-//import imgCurtido from "../../public/imagens/curtido.svg";
+import imgCurtido from "../../public/imagens/curtido.svg";
 import imgComentarioAtivo from "../../public/imagens/comentarioAtivo.svg";
 import imgComentarioCinza from "../../public/imagens/comentarioCinza.svg";
 import {FazerComentario} from '../../components/feed/FazerComentario';
+import FeedService from "../../services/FeedService";
 
 
 const tamanhoLimiteDescricao = 90;
+const feedService = new FeedService();
 
 export default function Postagem({
+    id,
     usuario,
     fotoDoPost,
     descricao,
     comentarios,
-    usuarioLogado
+    usuarioLogado,
+    curtidas
 }){
-
+  const [comentariosPostagem,setComentariosPostagem] = useState(comentarios);
   const [deveExibirSecaoParaComentar, setDeveExibirSecaoParaComentar] = useState(false)
   const [tamanhoAtualDaDescricao, setTamanhoAtualDaDescricao] = useState(tamanhoLimiteDescricao);
 
@@ -36,21 +41,51 @@ export default function Postagem({
     if(descricaoMaiorQueLimite()){
        mensagem += '...';
     }
-    return mensagem
+    return mensagem;
     }  
 
     // o icone do comentario ficara lilás ao ser clicado
     const obterImagemComentario = () =>{
     return deveExibirSecaoParaComentar 
-    ?imgComentarioAtivo 
-    :imgComentarioCinza;
+    ? imgComentarioAtivo 
+    : imgComentarioCinza;
+    }
+
+    const alterarCurtidas = () =>{
+      try {
+        
+      } catch (e) {
+        
+      }
     }
     
-    //Fazer a chamada para a API
+    //Lógica para a chamada da API
+    // try catch para avaliar se terá um comportamento inexperado da aplicação
+    //Pegar o payload do comentario e passar como parametro junto com o id e ele dara o resultado
 
     const comentar = async (comentario) => {
        console.log('fazer comentario');
-       return true;
+       
+      try {
+         // chama o comentario
+         await feedService.adicionarComentario(id, comentario);
+         //após comentar será oculto o elemento
+         setDeveExibirSecaoParaComentar(false);    
+         setComentariosPostagem([
+          ...comentariosPostagem,
+          {
+             nome: usuarioLogado.nome,
+             mensagem: comentario
+          }
+         ])    
+         return true;      
+      } catch (e) {
+        alert('Erro ao fazer comentario' + (e?.response?.data?.erro ||'')) // Exibi o erro da API caso tenha alguma mensagem de erro customizado ou devolva uma string vazia
+        return false
+      }
+
+
+       return Promise.resolve(true);
     }
 
   return(
@@ -73,7 +108,7 @@ export default function Postagem({
                 alt="icone curtir"
                 width={20}
                 height={20}
-                onClick={() => console.log('curtir')}
+                onClick={alterarCurtidas}
                 />  
 
                 <Image 
@@ -85,7 +120,7 @@ export default function Postagem({
                 />  
 
                 <span className="quantidadeCurtidas">
-                   Curtida por <strong> 32 pessoas </strong>
+                   Curtida por <strong> {curtidas.length} pessoas </strong>
                 </span>
             </div>
 
@@ -93,7 +128,7 @@ export default function Postagem({
                 <strong className="nomeUsuario">{usuario.nome} </strong>
                 <p className="descricao">
                   {obterDescricao()}
-                  { descricaoMaiorQueLimite() && (
+                  {descricaoMaiorQueLimite() && (
                     <span 
                       onClick={exibirDescricaoCompleta}
                       className="exibirDescricaoCompleta"> 
@@ -104,7 +139,7 @@ export default function Postagem({
             </div>          
 
             <div className="comentariosDaPublicacao">
-              {comentarios.map((comentario,i) => (
+              {comentariosPostagem.map((comentario,i) => (
                 <div className="comentario" key={i}>
                   <strong className="nomeUsuario">{comentario.nome}</strong>
                   <p className="descricao">{comentario.mensagem}</p>
