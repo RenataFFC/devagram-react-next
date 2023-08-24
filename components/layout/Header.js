@@ -14,6 +14,12 @@ export default function Header(){
   const [termoPesquisado, setTermoPesquisado] = useState('');
 	const router = useRouter();
 
+	let headerClassName='';
+	if(window && window.location.pathname !== '/'){ // verificar se o objeto window já existe se o usuario já esta no navegador 
+	//location.pathname devolve a rota em que está
+	    headerClassName = 'desktop';
+  }   
+
 	const aoPesquisar = async (e) => {		
 		setTermoPesquisado(e.target.value);
 		setResultadoPesquisa([]);
@@ -35,7 +41,7 @@ export default function Header(){
 		 router.push(`/perfil/${id}`);
 	}
    return (
-		<header className='headerPrincipal'>
+		<header className={`headerPrincipal ${headerClassName}`}>
 			<div className="conteudoHeaderPrincipal">			
           <div className="logoHeaderPrincipal">  
 					<Image

@@ -82,10 +82,10 @@ const  validarFormulario = () =>{
 								<div className="conteudoPaginaPublica">
 												<form onSubmit={aoSubmeter}>
 												<UploadImagem
-																								imagemPreviewClassName="avatar avatarPreview"
-																								imagemPreview={imagem?.preview || imagemAvatar.src}
-																								setImagem={setImagem}
-														/>
+												imagemPreviewClassName="avatar avatarPreview"
+												imagemPreview={imagem?.preview || imagemAvatar.src}
+												setImagem={setImagem}
+											 />
 																<InputPublico
 																				imagem={imagemUsuarioAtivo}
 																				texto="Nome Completo"

@@ -2,7 +2,7 @@ import comAutorizacao from "../../hoc/comAutorizacao";
 import Feed from "../feed";
 
 function Home({usuarioLogado}) {
-    return (
+    return (       
         <Feed usuarioLogado={usuarioLogado} />
     );
 }
