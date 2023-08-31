@@ -8,6 +8,7 @@ import { validarEmail, validarSenha, validarNome, validarConfirmacaoSenha} from 
 import UsuarioService from "../../services/UsuarioServices";
 import { useRouter } from "next/router";
 
+
 import imagemLogo from "../../public/imagens/logo.svg";
 import imagemUsuarioAtivo from "../../public/imagens/usuarioAtivo.svg";
 import imagemEnvelope from "../../public/imagens/envelope.svg";
@@ -15,6 +16,7 @@ import imagemChave from "../../public/imagens/chave.svg";
 import imagemAvatar from "../../public/imagens/avatar.svg";
 
 const usuarioService = new UsuarioService();
+
 
 export default function Cadastro(){
 		const [imagem, setImagem] = useState(null);

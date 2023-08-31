@@ -7,9 +7,10 @@ import { useState } from 'react';
 import UsuarioService from '../../services/UsuarioServices';
 import { useRouter } from 'next/router';
 
-const usuarioService = new UsuarioService();
 
-export default function Header(){
+const usuarioService = new UsuarioService();
+export default function Header()
+{
 	const [resultadoPesquisa, setResultadoPesquisa] = useState([]);
   const [termoPesquisado, setTermoPesquisado] = useState('');
 	const router = useRouter();

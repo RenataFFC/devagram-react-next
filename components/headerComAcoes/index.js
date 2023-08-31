@@ -5,27 +5,38 @@ export default function HeaderComAcoes({
    iconeEsquerda,
    textoEsquerda = null,
    aoClicarAcaoEsquerda,
-   titulo
+   titulo,
+   elementoDireita,
+   aoClicarElementoDireita
 }){
   return(
     <div className={`headerComAcoes ${className}`}>
-      {iconeEsquerda ?(
+    {iconeEsquerda ? (
         <Image
-           src={iconeEsquerda}
-           alt='icone esquerda header com ações'
-           onClick={aoClicarAcaoEsquerda}
-           width={20}
-           height={20}
+            src={iconeEsquerda}
+            alt='icone esquerda cabeçalho com ações'
+            onClick={aoClicarAcaoEsquerda}
+            width={25}
+            height={25}
         />
-       
-      ):(
+    ) : (
          textoEsquerda !== null && (
-          <span className='headerComAcoesTextoEsquerda' onClick={aoClicarAcaoEsquerda}>
+          <span className="headerComAcoesTextoEsquerda" onClick={aoClicarAcaoEsquerda}>
             {textoEsquerda}
           </span>
          )
       )}  
       <h3>{titulo}</h3>
- </div>
+
+      {elementoDireita && (
+          <button 
+           type='button'
+           className='btnAcaoDireita'
+           onClick={aoClicarElementoDireita}
+          >
+            {elementoDireita}            
+          </button>
+      )}     
+    </div>
   )
 }

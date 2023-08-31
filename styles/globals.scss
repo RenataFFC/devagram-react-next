@@ -91,7 +91,7 @@ body{
 }
 .largura30pctDesktop {
   @media screen and (min-width: $desktopBreakpoint) {
-    width: 30%;
+    width: 32%;
     margin: auto;
   }
 }
@@ -117,3 +117,5 @@ body{
 @import '../components/layout/header.scss';
 @import '../components/layout/footer.scss';
 @import '../components/feed/feed.scss';
+@import '../components/headerComAcoes/headerComAcoes.scss';
+@import '../pages/perfil/perfil.scss';

@@ -14,7 +14,7 @@ export default function Feed({usuarioLogado}){
                   const postagensFormatadas = data.map((postagem) =>({ 
                     id: postagem._id,
                     usuario:{
-                      id: postagem.userId,
+                      id: postagem.idUsuario,
                       nome:postagem.usuario.nome,
                       avatar:postagem.usuario.avatar 
                     },

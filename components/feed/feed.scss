@@ -3,7 +3,7 @@
   background-color: $white;
   margin-top: 16px;
 
-  .postagem {
+  .postagem {      
       .avatar {
           height: 32px;
           width: 32px;
@@ -59,7 +59,7 @@
               align-items: center;
               margin-bottom: 6px;
 
-              >span{
+              >img{
                   margin-right: 5px !important;
               }
 
@@ -115,9 +115,8 @@
 
           .footerDaPostagem {
               .acoesDaPostagem {
-                  >span {
-                      cursor: pointer;
-                  }
+                   cursor: pointer;
+                 
               }
           }
 
