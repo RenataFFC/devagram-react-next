@@ -1,3 +1,26 @@
+Devagram
+Projeto em desenvolvimento, 
+
+Tenologias Utilizadas
+React.js 17.0.2
+Nextjs 12.1.0
+Nodejs 14.18.0
+Sass 1.49.9
+
+Configuração do ambiente de desenvolvimento
+clonar o repositório git clone <url_git>
+fazer uma copia do arquivo .env.example e renomear o novo arquivo de .env.local
+configurar as variáveis de ambiente no arquivo .env.local
+instale as dependencias do projeto npm i
+execute o comando npm run dev para subir a aplicação
+
+
+
+
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
