@@ -31,9 +31,16 @@ export default class UsuarioService extends HttpService {
   }
 
   // esse serviço vai até API pegar os dados do perfil do usuario
-  async obterPerfil(){
-     return this.get(`/pesquisa?id=${idUsuario}`) ;  
+  async obterPerfil(idUsuario){
+      return await this.get(`/pesquisa?id=${idUsuario}`) ;  
   }
+
+  // clique do botão para seguir ou deixar de seguir
+  async alternarSeguir(idUsuario) {
+    return this.put(`/seguir?id=${idUsuario}`);
+}
+
+
 
   obterInformacoesDoUsuarioLogado(){
     return{

@@ -3,11 +3,51 @@ import imgSetaEsquerda from '../../public/imagens/setaEsquerda.svg';
 import HeaderComAcoes from '../../components/headerComAcoes';
 import Avatar from '../../components/avatar';
 import Buttom from '../../components/buttom';
+import { useEffect, useState } from 'react';
+import UsuarioService from '../../services/UsuarioServices';
+
+
+const usuarioService = new UsuarioService();
 
 
 export default function HeaderPerfil ({
     usuario
 }){
+    const[estaSeguindoOUsuario,setEstaSeguindoOUsuario] = useState(false);
+
+      useEffect(() => {
+          if(!usuario){
+              return;
+          }
+       setEstaSeguindoOUsuario(usuario.segueEsseUsuario);
+         
+
+      },[usuario]);
+
+      const obterTextoBotaoSeguir = () =>{
+         console.log({estaSeguindoOUsuario})
+         if(estaSeguindoOUsuario) {
+             return 'Deixar de seguir';
+         }
+         return 'Seguir'
+      }
+
+      const obterCorDoBotaoSeguir = () => {
+          if(estaSeguindoOUsuario){
+             return 'outline';
+          }
+          return 'primary'
+      }
+
+      const manipularCliqueBotaoSeguir = async () => {
+         try {
+             await usuarioService.alternarSeguir(usuario._id);
+             setEstaSeguindoOUsuario(!estaSeguindoOUsuario);
+         } catch (error) {
+             alert('Erro ao seguir / deixar de seguir')
+         }        
+      }
+
   return(
         <div className='headerPerfil largura30pctDesktop'>
             <HeaderComAcoes
@@ -20,21 +60,23 @@ export default function HeaderPerfil ({
                <div className='informacoesPerfil'>
                   <div className='statusContainer'>   
                       <div className='status'>
-                         <strong>15</strong>
+                         <strong>{usuario.publicacoes}</strong>
                          <span>Publicações</span>
                       </div>
                       <div className='status'>
-                         <strong>120</strong>
+                         <strong>{usuario.seguidores}</strong>
                          <span>Seguidores</span>
                       </div>
                       <div className='status'>
-                         <strong>135</strong>
+                         <strong>{usuario.seguindo}</strong>
                          <span>Seguindo</span>
                       </div>
                   </div>
 
                   <Buttom
-                    texto={'Seguir'}                   
+                    texto={obterTextoBotaoSeguir()}  
+                    cor={obterCorDoBotaoSeguir()}    
+                    manipularClique={manipularCliqueBotaoSeguir}                           
                   />
                </div>
             </div>

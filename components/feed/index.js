@@ -4,19 +4,19 @@ import FeedService from '../../services/FeedService';
 
 const feedService = new FeedService();
 
-export default function Feed({usuarioLogado}){
+export default function Feed({usuarioLogado, usuarioPerfil}){
    const[listaDePostagens, setListaDePostagens] = useState([]);
 
    useEffect (() => {
     async function  fetchPostagens() {
             setListaDePostagens([]);
-            const {data} = await feedService.carregarPostagens();   
+            const {data} = await feedService.carregarPostagens(usuarioPerfil?._id);   
                   const postagensFormatadas = data.map((postagem) =>({ 
                     id: postagem._id,
                     usuario:{
-                      id: postagem.idUsuario,
-                      nome:postagem.usuario.nome,
-                      avatar:postagem.usuario.avatar 
+                      id: postagem.usuarioId,
+                      nome: postagem?.usuario?.nome || usuarioPerfil?.nome,
+                      avatar: postagem?.usuario?.avatar || usuarioPerfil?.avatar 
                     },
                     fotoDoPost: postagem.foto,
                     descricao: postagem.descricao,
@@ -27,12 +27,14 @@ export default function Feed({usuarioLogado}){
                     }))              
               })); 
               setListaDePostagens(postagensFormatadas);
-              console.log(postagensFormatadas);
+             
              
   }        
   fetchPostagens();
-},[]);
-
+},[usuarioLogado,usuarioPerfil]);
+if (!listaDePostagens.length) {
+  return null;
+}
       return(
         <div className="feedContainer largura30pctDesktop">
           {listaDePostagens.map(dadosPostagem =>(

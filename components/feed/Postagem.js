@@ -84,7 +84,7 @@ export default function Postagem({
        
     const alterarCurtida = async () => {
        try {
-           await feedService.alterarCurtida(id);9
+           await feedService.alterarCurtida(id);
            const estaCurtido = curtidasPostagem.includes(usuarioLogado.id);
            if(usuarioLogadoCurtiuPostagem()){
             //Se o usuario logado curtiu a postagem tiro o usuario da lista de curtidas

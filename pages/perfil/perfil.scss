@@ -2,6 +2,13 @@
     .headerPerfil {
         background-color: $white;
 
+        .bordaHeaderPerfil {
+            margin: 0 ;
+            border: none;
+            background-color: $grey1;
+            height: 1px;          
+        }
+
         .statusPerfil {
             display: flex;
             align-items: center;
@@ -62,10 +69,7 @@
 
             .bordaHeaderPerfil {
                 margin: 0 auto;
-                border: none;
-                background-color: $grey1;
-                height: 1px;
-                width: 95%;
+                 width: 94%;
             }
 
             .statusPerfil {

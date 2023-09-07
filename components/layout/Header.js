@@ -15,11 +15,11 @@ export default function Header()
   const [termoPesquisado, setTermoPesquisado] = useState('');
 	const router = useRouter();
 
-	let headerClassName='';
-	if(window && window.location.pathname !== '/'){ // verificar se o objeto window já existe se o usuario já esta no navegador 
-	//location.pathname devolve a rota em que está
-	    headerClassName = 'desktop';
-  }   
+ // verificar se o objeto window já existe se o usuario já esta no navegador
+ let headerClassName = '';
+ if (typeof window !== 'undefined' && window.location.pathname !== '/') {   
+	 headerClassName = 'desktop';
+ }
 
 	const aoPesquisar = async (e) => {		
 		setTermoPesquisado(e.target.value);
