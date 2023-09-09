@@ -22,7 +22,7 @@ export default class UsuarioService extends HttpService {
   async cadastro(dados) {
     return this.post("/cadastro", dados);
   }
-  estaAutenticado(){
+   estaAutenticado(){
     return localStorage.getItem('token') !== null;
   }
   //criando um método para pesquisar

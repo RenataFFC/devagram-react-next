@@ -16,7 +16,7 @@ function Perfil({usuarioLogado}){
     try{
        const {data} = await usuarioService.obterPerfil(
          estaNoPerfilPessoal()
-          ? usuarioLogado.id 
+          ? usuarioLogado._id //
           : idUsuario
 
        ); //aqui estamos pegando o response que é data que trás o corpo da resposta
@@ -45,6 +45,7 @@ function Perfil({usuarioLogado}){
           <HeaderPerfil 
             usuarioLogado={usuarioLogado}
             usuario={usuario}
+            estaNoPerfilPessoal={estaNoPerfilPessoal()}
           />
           <Feed
            usuarioLogado={usuarioLogado}

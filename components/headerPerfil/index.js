@@ -1,32 +1,30 @@
 
+import { useEffect, useState } from 'react';
 import imgSetaEsquerda from '../../public/imagens/setaEsquerda.svg';
 import HeaderComAcoes from '../../components/headerComAcoes';
 import Avatar from '../../components/avatar';
 import Buttom from '../../components/buttom';
-import { useEffect, useState } from 'react';
 import UsuarioService from '../../services/UsuarioServices';
 
 
 const usuarioService = new UsuarioService();
 
-
 export default function HeaderPerfil ({
-    usuario
+        usuario     
 }){
     const[estaSeguindoOUsuario,setEstaSeguindoOUsuario] = useState(false);
-
+       console.log('oi', estaSeguindoOUsuario)
       useEffect(() => {
           if(!usuario){
-              return;
+              return;              
           }
-       setEstaSeguindoOUsuario(usuario.segueEsseUsuario);
-         
+      setEstaSeguindoOUsuario(usuario.segueEsseUsuario);     
+
 
       },[usuario]);
 
       const obterTextoBotaoSeguir = () =>{
-         console.log({estaSeguindoOUsuario})
-         if(estaSeguindoOUsuario) {
+          if(estaSeguindoOUsuario) {
              return 'Deixar de seguir';
          }
          return 'Seguir'
@@ -36,12 +34,14 @@ export default function HeaderPerfil ({
           if(estaSeguindoOUsuario){
              return 'outline';
           }
-          return 'primary'
+          return 'primary';
       }
 
       const manipularCliqueBotaoSeguir = async () => {
          try {
-             await usuarioService.alternarSeguir(usuario._id);
+            console.log(estaSeguindoOUsuario)
+    
+             await usuarioService.alternarSeguir(usuarioLogado_id);//aqui
              setEstaSeguindoOUsuario(!estaSeguindoOUsuario);
          } catch (error) {
              alert('Erro ao seguir / deixar de seguir')
