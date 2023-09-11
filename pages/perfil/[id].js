@@ -1,22 +1,22 @@
-import Feed from '../../../components/feed';
-import comAutorizacao from '../../../hoc/comAutorizacao';
+import Feed from '../../components/feed';
+import comAutorizacao from '../../hoc/comAutorizacao';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import HeaderPerfil from '../../../components/headerPerfil';
-import UsuarioService from '../../../services/UsuarioServices';
+import HeaderPerfil from '../../components/headerPerfil';
+import UsuarioService from '../../services/UsuarioServices';
 
 
 const usuarioService = new UsuarioService()
 
 function Perfil({usuarioLogado}){
   const [usuario, setUsuario] = useState({});
-  const router =useRouter();
+  const router = useRouter();
 
   const obterPerfil = async (idUsuario) => {
     try{
        const {data} = await usuarioService.obterPerfil(
          estaNoPerfilPessoal()
-          ? usuarioLogado._id //
+          ? usuarioLogado.id 
           : idUsuario
 
        ); //aqui estamos pegando o response que é data que trás o corpo da resposta

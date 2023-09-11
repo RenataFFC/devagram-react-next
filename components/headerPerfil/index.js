@@ -5,53 +5,78 @@ import HeaderComAcoes from '../../components/headerComAcoes';
 import Avatar from '../../components/avatar';
 import Buttom from '../../components/buttom';
 import UsuarioService from '../../services/UsuarioServices';
+import { useRouter } from 'next/router';
 
 
 const usuarioService = new UsuarioService();
 
 export default function HeaderPerfil ({
-        usuario     
+        usuario,
+        estaNoPerfilPessoal
+        
 }){
     const[estaSeguindoOUsuario,setEstaSeguindoOUsuario] = useState(false);
-       console.log('oi', estaSeguindoOUsuario)
-      useEffect(() => {
+    const[qtdeSeguidores, setQtdeSeguidores] = useState(0);
+    
+    
+     const router = useRouter();
+
+         useEffect(() => {
           if(!usuario){
               return;              
           }
-      setEstaSeguindoOUsuario(usuario.segueEsseUsuario);     
-
-
+      setEstaSeguindoOUsuario(usuario.segueEsseUsuario); 
+      setQtdeSeguidores(usuario.seguidores);    
       },[usuario]);
 
       const obterTextoBotaoSeguir = () =>{
+          if(estaNoPerfilPessoal){
+             return 'Editar Perfil'
+          }
+
           if(estaSeguindoOUsuario) {
              return 'Deixar de seguir';
-         }
+         }else{
          return 'Seguir'
-      }
+      };
+   };
 
       const obterCorDoBotaoSeguir = () => {
           if(estaSeguindoOUsuario){
              return 'outline';
-          }
+          }else{
           return 'primary';
-      }
+      };
+   };
 
-      const manipularCliqueBotaoSeguir = async () => {
+      const manipularCliqueBotaoPrincipal = async () => {
+
+         if(estaNoPerfilPessoal){
+            return router.push('/perfil/editar');//usamos o return para parar aqui
+         }
+
          try {
-            console.log(estaSeguindoOUsuario)
-    
-             await usuarioService.alternarSeguir(usuarioLogado_id);//aqui
+   
+             await usuarioService.alternarSeguir(usuario._id);
+              setQtdeSeguidores(
+               estaSeguindoOUsuario
+                 ? (qtdeSeguidores -1)
+                 : (qtdeSeguidores +1)
+             );
              setEstaSeguindoOUsuario(!estaSeguindoOUsuario);
          } catch (error) {
              alert('Erro ao seguir / deixar de seguir')
          }        
+      }
+      const aoClicarSetaEsquerda = () => {
+         router.back() //permite que o usuario volta a uma determinada página(anterior)
       }
 
   return(
         <div className='headerPerfil largura30pctDesktop'>
             <HeaderComAcoes
             iconeEsquerda={imgSetaEsquerda}
+            aoClicarAcaoEsquerda={aoClicarSetaEsquerda}
             titulo={usuario.nome}
             />
             <hr className='bordaHeaderPerfil'/>
@@ -64,7 +89,7 @@ export default function HeaderPerfil ({
                          <span>Publicações</span>
                       </div>
                       <div className='status'>
-                         <strong>{usuario.seguidores}</strong>
+                         <strong>{qtdeSeguidores}</strong>
                          <span>Seguidores</span>
                       </div>
                       <div className='status'>
@@ -76,7 +101,7 @@ export default function HeaderPerfil ({
                   <Buttom
                     texto={obterTextoBotaoSeguir()}  
                     cor={obterCorDoBotaoSeguir()}    
-                    manipularClique={manipularCliqueBotaoSeguir}                           
+                    manipularClique={manipularCliqueBotaoPrincipal}                           
                   />
                </div>
             </div>

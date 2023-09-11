@@ -8,9 +8,10 @@ export default function Feed({usuarioLogado,usuarioPerfil}){
    const[listaDePostagens, setListaDePostagens] = useState([]);
 
    useEffect (() => {
-    async function  fetchPostagens() {
-            setListaDePostagens([]);
-            const {data} = await feedService.carregarPostagens(usuarioPerfil?._id);   
+     const fetchPostagens = async () => { 
+          setListaDePostagens([]);
+            const {data} = await feedService.carregarPostagens(usuarioPerfil?._id); 
+            if(data.length >0){  
                   const postagensFormatadas = data.map((postagem) =>({ 
                     id: postagem._id,
                     usuario:{
@@ -24,29 +25,36 @@ export default function Feed({usuarioLogado,usuarioPerfil}){
                     comentarios: postagem.comentario.map(c => ({
                       nome: c.nome,
                       mensagem: c.comentario
-                    }))              
+                    })),            
               })); 
-              setListaDePostagens(postagensFormatadas);
-             
-             
-  }        
-  fetchPostagens();
-},[usuarioLogado,usuarioPerfil]);
-if (!listaDePostagens.length) {
-  return null;
-}
-      return(
-        <div className="feedContainer largura30pctDesktop">
-          {listaDePostagens.map(dadosPostagem =>(
-            <Postagem 
-              key={dadosPostagem.id}
-              {...dadosPostagem}
-              usuarioLogado={usuarioLogado}
-              />
-            ))}  
-        </div>   
-      )
+              setListaDePostagens(postagensFormatadas);          
+            }else{    
+              setListaDePostagens([]);
+            }
+          };
+         fetchPostagens();
 
- }
+         }, [usuarioLogado,usuarioPerfil]);
+
+        if (!listaDePostagens.length) {
+          return null;
+        }
+
+        return (
+          <div className="feedContainer largura30pctDesktop">
+              {listaDePostagens.map(dadosPostagem => (
+                      <Postagem
+                          key={dadosPostagem.id}
+                          {...dadosPostagem}
+                          usuarioLogado={usuarioLogado}
+                      />
+                  ))
+              }
+          </div>
+      )
+  }
+        
+
+          
  
    
