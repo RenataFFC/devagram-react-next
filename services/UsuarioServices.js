@@ -18,10 +18,25 @@ export default class UsuarioService extends HttpService {
       
     }
   }
+
+  async logout(){
+    localStorage.removeItem("nome");
+    localStorage.removeItem("email");
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
+    localStorage.removeItem("avatar");
+  }
+
   //criando um método cadastro
   async cadastro(dados) {
     return this.post("/cadastro", dados);
   }
+  //atualizar o perfil
+  async atualizarPerfil(dados) {
+    return this.put("/usuario", dados);
+  }
+
+
    estaAutenticado(){
     return localStorage.getItem('token') !== null;
   }
@@ -39,6 +54,8 @@ export default class UsuarioService extends HttpService {
   async alternarSeguir(idUsuario) {
     return this.put(`/seguir?id=${idUsuario}`);
 }
+
+
 
 
 

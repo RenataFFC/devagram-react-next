@@ -2,13 +2,7 @@
     .headerPerfil {
         background-color: $white;
 
-        .bordaHeaderPerfil {
-            margin: 0 ;
-            border: none;
-            background-color: $grey1;
-            height: 1px;          
-        }
-
+     
         .statusPerfil {
             display: flex;
             align-items: center;
@@ -65,12 +59,7 @@
                 >img {
                     display: none;
                 }
-            }
-
-            .bordaHeaderPerfil {
-                margin: 0 auto;
-                 width: 94%;
-            }
+            }         
 
             .statusPerfil {
                 .avatar {
@@ -114,7 +103,7 @@
             margin: 16px 0px;
             display: flex;
             align-items: center;
-            padding: 0px 16px;
+            padding: 0px 30px;
 
             label {
                 color: $grey3;
@@ -129,6 +118,31 @@
             }
         }
     }
+    @media screen and (min-width: $desktopBreakpoint) {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+
+        .conteudoPaginaEditarPerfil {
+            flex: 1;
+
+            .edicaoAvatar {
+                .avatar {
+                    width: 120px;
+                    height: 120px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+
+            .edicaoNome {
+                
+            }
+        }
+    }
+
 
 
 }

@@ -1,11 +1,15 @@
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 import imgSetaEsquerda from '../../public/imagens/setaEsquerda.svg';
+import imgLogout from '../../public/imagens/logout.svg';
 import HeaderComAcoes from '../../components/headerComAcoes';
 import Avatar from '../../components/avatar';
 import Buttom from '../../components/buttom';
 import UsuarioService from '../../services/UsuarioServices';
-import { useRouter } from 'next/router';
+
+
 
 
 const usuarioService = new UsuarioService();
@@ -72,14 +76,39 @@ export default function HeaderPerfil ({
          router.back() //permite que o usuario volta a uma determinada página(anterior)
       }
 
+      const logout = () => {
+         usuarioService.logout();
+         router.replace('/');
+      }
+
+      const obterElementoDireitaHeader = () =>{
+         if(estaNoPerfilPessoal){
+           return(           
+                  <Image
+                  src={imgLogout}
+                  alt='icone logout'
+                  onClick={logout}
+                  width={25}
+                  height={25}          
+                  />   
+              
+          );
+      }
+      return null;
+   }
+
   return(
-        <div className='headerPerfil largura30pctDesktop'>
+        <div className='headerPerfil largura30pctDesktop'>  
+
             <HeaderComAcoes
-            iconeEsquerda={imgSetaEsquerda}
+            iconeEsquerda={estaNoPerfilPessoal? null:imgSetaEsquerda}
             aoClicarAcaoEsquerda={aoClicarSetaEsquerda}
             titulo={usuario.nome}
+            elementoDireita={obterElementoDireitaHeader()}            
             />
-            <hr className='bordaHeaderPerfil'/>
+
+            <hr className='linhaDivisoria'/>
+
             <div className='statusPerfil'>
                <Avatar src={usuario.avatar}/>            
                <div className='informacoesPerfil'>

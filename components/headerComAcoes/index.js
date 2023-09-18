@@ -29,13 +29,13 @@ export default function HeaderComAcoes({
       <h3>{titulo}</h3>
 
       {elementoDireita && (
-          <button 
-           type='button'
-           className='btnAcaoDireita'
-           onClick={aoClicarElementoDireita}
-          >
-            {elementoDireita}            
-          </button>
+                <button
+                    type='button'
+                    className='btnAcaoDireita'
+                    onClick={aoClicarElementoDireita}
+                >
+                    {elementoDireita}
+                </button>
       )}     
     </div>
   )
