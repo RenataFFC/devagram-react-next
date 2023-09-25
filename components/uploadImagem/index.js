@@ -8,42 +8,58 @@ export default function UploadImagem({
     aoSetarAReferencia
 }){
     const referenciaInput = useRef(null);
-    useEffect(() => {
-        
-    if(!aoSetarAReferencia){
-        return;
-     } 
+
+    useEffect(() => {                
+        if(!aoSetarAReferencia){
+            return;
+        } 
        aoSetarAReferencia(referenciaInput?.current);
     },[referenciaInput?.current]);
     
     const abrirSeletorArquivos = () => {
        referenciaInput?.current?.click();
-    }
+    };
 
     const aoAlterarImagem = () => {
-        if(!referenciaInput?.current?.files?.length){
+        if(!referenciaInput?.current?.files.length){
             return;
         }
 
-        //fileReader = 
-        const arquivo = referenciaInput?.current?.files[0];
-         //fileReader = classe do JavaScript
-        const fileReader=new FileReader();
-        //readAsDataUR metodo que devolve a url de um arquivo
-        fileReader.readAsDataURL(arquivo);
-        //onloadend = saber se o arquivo já foi carregado
-        fileReader.onloadend = () =>{
+       
+        const arquivo = referenciaInput?.current?.files[0]; 
+        obterUrlDaImagemEAtualizarEstado(arquivo);
+    }
+
+    const aoSoltarAImagem = (e) => {
+        e.preventDefault();
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            const arquivo = e.dataTransfer.files[0];
+            obterUrlDaImagemEAtualizarEstado(arquivo);
+        }
+    }
+
+
+        const obterUrlDaImagemEAtualizarEstado = (arquivo) => {
+        const fileReader=new FileReader(); //fileReader = classe do JavaScript
+        fileReader.readAsDataURL(arquivo);        //readAsDataUR metodo que devolve a url de um arquivo
+        fileReader.onloadend = () =>{        //onloadend = saber se o arquivo já foi carregado
             setImagem({
                 preview: fileReader.result,
                 arquivo
             });
-
-        }
- 
+        } 
     }
+   
+     
+
+
     return(
-        <div className={`uploadImagemContainer ${className}`}
-         onClick={abrirSeletorArquivos}>
+        <>
+        <div className={`uploadImagemContainer ${className}`}         
+            onClick={abrirSeletorArquivos}
+            onDragOver={e => e.preventDefault()}
+            onDrop={aoSoltarAImagem}
+        >
               {imagemPreview && (
                 <div className='imagemPreviewContainer'>
                     <img
@@ -52,15 +68,16 @@ export default function UploadImagem({
                     className={imagemPreviewClassName}  
                     />                 
                 </div>
-            ) }
-            <input 
-            type='file' 
-            className='oculto' 
-            accept="image/*"
-            ref={referenciaInput}
-            onChange={aoAlterarImagem}
-            />
+            )}
+                <input 
+                    type='file' 
+                    className='oculto' 
+                    accept="image/*"
+                    ref={referenciaInput}
+                    onChange={aoAlterarImagem}
+                />
         </div>
+        </>
     );  
 
 }

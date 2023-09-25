@@ -33,12 +33,18 @@
 
       .footerDaPostagem {
           padding: 5px 16px;
+         
+
 
           strong.nomeUsuario {
               font-size: 12px;
               float: left;
               margin-right: 4px;
               color: $grey4;
+          }
+          .descricaoDaPostagem{
+
+            margin-bottom: 10px;
           }
 
           p.descricao {
@@ -59,8 +65,8 @@
               align-items: center;
               margin-bottom: 6px;
 
-              >img{
-                  margin-right: 5px !important;
+              > .span {
+                margin-right: 6px !important;
               }
 
               .quantidadeCurtidas {
@@ -70,14 +76,14 @@
 
                   strong {
                       font-size: 10px;
-                      color: $grey4;
+                     
                   }
               }
           }
 
           .comentariosDaPublicacao {
-              max-height: 100px;
-              overflow-y: auto;
+            max-height: 100px;
+            overflow-y: auto;
           }
       }
 
@@ -100,7 +106,7 @@
   }
 
   @media screen and (min-width: $desktopBreakpoint) {
-      padding-top: 2px;
+      padding-top: 8px;
       margin-top: 0px;
 
       .postagem {
@@ -114,10 +120,15 @@
           }
 
           .footerDaPostagem {
+            padding: 5px;
+            max-height: 100px;
+            overflow-y: auto;
+
               .acoesDaPostagem {
-                   cursor: pointer;
-                 
-              }
+                > .span {
+                    cursor: pointer;
+                  }
+                }
           }
 
           .containerFazerComentario {

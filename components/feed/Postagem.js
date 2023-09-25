@@ -126,6 +126,7 @@ export default function Postagem({
        <div className="footerDaPostagem">
             <div className="acoesDaPostagem">
                 <Image 
+                className="span"
                 src={obterImagemCurtida()}
                 alt="icone curtir"
                 width={20}
@@ -134,6 +135,7 @@ export default function Postagem({
                 />  
 
                 <Image 
+                className="span"
                 src={obterImagemComentario()}
                 alt="icone comentar"
                 width={20}
@@ -170,8 +172,8 @@ export default function Postagem({
            </div>             
         </div>
         
-        {deveExibirSecaoParaComentar &&
-            <FazerComentario comentar={comentar} usuarioLogado={usuarioLogado}/>
+        {deveExibirSecaoParaComentar && (<FazerComentario comentar={comentar} usuarioLogado={usuarioLogado}/>)
+           
         }    
     </div>
     );
