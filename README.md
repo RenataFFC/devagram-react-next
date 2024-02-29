@@ -1,6 +1,6 @@
 # Devagram React
 
-Projeto desenvolvido para finalidade de estudo do React.js e Next na formação da Devaria 2023.
+Projeto desenvolvido para finalidade de estudo do React.js e Next.
 
 ## Implementação na Vercel
 
